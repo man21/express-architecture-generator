@@ -1,0 +1,45 @@
+<% if (view) { -%>
+//var createError = require('http-errors');
+<% } -%>
+var express = require('express');
+var path = require('path');
+<% Object.keys(modules).sort().forEach(function (variable) { -%>
+var <%- variable %> = require('<%- modules[variable] %>');
+<% }); -%>
+
+//<% Object.keys(localModules).sort().forEach(function (variable) { -%>
+//var <%- variable %> = require('<%- localModules[variable] %>');
+//<% }); -%>
+
+var app = express();
+app.disable("x-powered-by")
+
+
+<% if (view) { -%>
+// view engine setup
+<% if (view.render) { -%>
+app.engine('<%- view.engine %>', <%- view.render %>);
+<% } -%>
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', '<%- view.engine %>');
+
+<% } -%>
+
+<!-- app.use("/v1", require("./routes")) -->
+<!-- require("./middleware/passport") -->
+
+
+<% uses.forEach(function (use) { -%>
+app.use(<%- use %>);
+<% }); -%>
+
+// <% mounts.forEach(function (mount) { -%>
+//app.use(<%= mount.path %>, <%- mount.code %>);
+//<% }); -%> 
+
+<% if (view) { -%>
+
+<% } -%>
+
+app.get("*", (req, res) => res.status(404).send({ message: "Invalid Route" }))
+module.exports = app;
