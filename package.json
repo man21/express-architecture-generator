@@ -18,7 +18,7 @@
   "repository": "man21/express-architecture-generator",
   "license": "MIT",
   "dependencies": {
-    "ejs": "2.6.2",
+    "ejs": "3.1.7",
     "fs-extra": "^10.1.0",
     "inquirer": "^8.2.4",
     "minimatch": "3.0.4",
